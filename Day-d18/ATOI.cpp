@@ -1,22 +1,65 @@
-/* https://practice.geeksforgeeks.org/problems/implement-atoi/1/ */
-class Solution{
-  public:
-    /*You are required to complete this method */
-    int atoi(string str) {
+/* https://leetcode.com/problems/string-to-integer-atoi/*/
+class Solution {
+public:
+    int myAtoi(string s) {
         int num = 0;
+        bool neg = false, trigger = false;
         int i = 0;
-        bool neg = false;
-        if(str[0] == '-') neg = true, i += 1;
-        for(int j = i; j < str.size(); ++j) {
-            char ch = str[j];
-            if('0' <= ch and ch <= '9') {
-                num = num*10 + (ch - '0');
+        int integer = 214748364;
+        while(i < s.size() and s[i] == ' ')
+             i += 1; 
+        if(i == s.size()) return num;
+        if(s[i] == '-'){
+            neg = true;
+            i += 1;
+        }
+        else if(s[i] == '+') {
+            i += 1;
+        }
+        for(int p = i; p < s.size(); ++p) {
+            if('0' <= s[p] and s[p] <= '9') {
+                 int x = (s[p] - '0');
+                 if(neg) {
+                     if(num > integer)  {
+                         num = integer*10 + 7;
+                         trigger = true;
+                     }
+                     else if(num == integer) {
+                         if(x <= 7) num = num*10 + x;
+                         else num = integer*10 + 7, trigger = true;
+                     }
+                     else 
+                        num = num*10 + x;
+                     
+                 }
+                else {
+                    if(num > integer)  {
+                         num = integer*10 + 7;
+                         
+                     }
+                     else if(num == integer) {
+                         if(x <= 7) num = num*10 + x;
+                         else num = integer*10 + 7;
+                     }
+                     else 
+                        num = num*10 + x;
+                }
+                 
             }
             else {
-                return -1;
+                if(neg){
+                    if(trigger)
+                     return (num * -1) - 1;
+                    return -1 * num;
+                }
+                return num;
             }
         }
-        if(neg) return -1 * num;
+        if(neg) {
+            if(trigger)
+                 return (num * -1) - 1;
+            return -1 * num;
+        }
         return num;
     }
 };
