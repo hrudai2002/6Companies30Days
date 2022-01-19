@@ -1,23 +1,26 @@
 /* https://practice.geeksforgeeks.org/problems/winner-of-an-election-where-votes-are-represented-as-candidate-names-1587115621/1/    */
-string amendSentence (string s)
+vector<string> winner(string arr[],int n)
     {
-        s += "$";
-        string ans = "";
-        string res = "";
-        for(int i = 0; i < s.size(); ++i) {
-            if(('A' <= s[i] and s[i] <= 'Z') or s[i] == '$') {
-                if(res.size() > 0){
-                    if(s[i] != '$')
-                    ans += res + " ";
-                    else
-                    ans += res;
+       unordered_map<string, int> mp;
+       string ans;
+       int mx = 0;
+       for(int i = 0; i < n; ++i) {
+           string s = arr[i];
+           mp[s] += 1;
+       }
+       
+       for(int i = 0; i < n; ++i) {
+           string s = arr[i];
+           if(mp[s] > mx) {
+               ans = s;
+               mx = mp[s];
+            }
+            if(mp[s] == mx) {
+                if(s < ans) {
+                    ans = s;
                 }
-                res = tolower(s[i]);
             }
-            else {
-                res += s[i];
-            }
-        }
-        return ans;
-        
+           
+       }
+       return {ans, to_string(mx)};
     }
