@@ -10,7 +10,7 @@ void findMax(string str, string &mx, int k, int pos) {
         if(maxm != str[pos]) 
            k--; 
         
-        for(int i = str.size() - 1; i >= pos; --i) {fd
+        for(int i = str.size() - 1; i >= pos; --i) {
             if(str[i] == maxm) {
                 swap(str[i], str[pos]);
                 if(str.compare(mx) > 0) 
